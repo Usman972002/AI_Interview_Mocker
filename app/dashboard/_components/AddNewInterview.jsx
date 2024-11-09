@@ -17,6 +17,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useUser } from "@clerk/nextjs";
 import moment from "moment";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const AddNewInterview = () => {
   const BASEURL = process.env.NEXT_PUBLIC_BACKEND_API;
@@ -27,6 +28,7 @@ const AddNewInterview = () => {
   const [loading, setLoading] = useState(false);
   const [jsonResponse, setJsonResponse] = useState([]);
   const { user } = useUser();
+    const router = useRouter();
 
   const onSubmit = async (e) => {
     setLoading(true);
@@ -50,7 +52,6 @@ const AddNewInterview = () => {
     setJsonResponse(MockJsonResponse);
 
     if (MockJsonResponse) {
-      try {
         const res = await axios.post(
           `${BASEURL}/api/addInterView`,
           {
@@ -63,7 +64,8 @@ const AddNewInterview = () => {
             createdAt: moment().format("DD-MM-yyyy"),
           }
         );
-
+        console.log(res)
+        console.log(res.data);
         if(res.status === 201){
             console.log("Added Mock Interview Details Successfully");
         }else{
@@ -71,11 +73,12 @@ const AddNewInterview = () => {
             console.log("Error while saving");
         }
 
-      } catch (err) {
-        console.log("error while saving the Interview Response")
-      }
+        if(res){
+            setOpenDialog(false);
+            router.push('/dashboard/interview/'+res?.data)
+        }
+     
 
-      setOpenDialog(false);
     } else {
       console.log("Error");
     }
