@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { Lightbulb, WebcamIcon } from "lucide-react";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Webcam from "react-webcam";
 
@@ -9,17 +10,18 @@ const Interview = ({ params }) => {
   const BASEURL = process.env.NEXT_PUBLIC_BACKEND_API;
   const [interviewData, setInterViewData] = useState();
   const [webcamEnabled, setWebCamEnabled] = useState(false);
+  const [interviewId,setInterviewId] = useState();
   useEffect(() => {
     // Unwrap `params` with React.use() before accessing properties
     async function fetchParams() {
       const resolvedParams = await params;
       console.log(resolvedParams.interviewId);
+      setInterviewId(resolvedParams?.interviewId)
       getInterviewDetails(resolvedParams.interviewId);
     }
 
     fetchParams();
   }, []);
-
   function getInterviewDetails(interviewId) {
     axios
       .get(`${BASEURL}/api/interview/${interviewId}`)
@@ -91,7 +93,9 @@ const Interview = ({ params }) => {
       </div>
 
       <div className="flex mt-5 justify-end items-end">
+        <Link href={`/dashboard/interview/${interviewId}/start`}>
         <Button>Start Interview</Button>
+        </Link>
       </div>
     </div>
   );
