@@ -49,21 +49,22 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="px-72 py-4">
-      <h2 className="text-3xl font-bold text-gray-800 mb-4">Frequently Asked Questions</h2>
+    <div className="px-4 md:px-24 lg:px-72 py-4">
+      <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center">Frequently Asked Questions</h2>
       <div className="space-y-4">
-      {questions.map((item, index) => (
-        <Collapsible key={index} className="mt-5">
-          <CollapsibleTrigger className="flex justify-between p-2 bg-secondary rounded-lg my-2 text-left gap-7 w-full">
-            {item.question}  <ChevronDown className="h-5 w-5"/>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="p-2 border rounded-lg bg-green-50 text-sm text-green-900">
-               {item.answer}
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-      ))}
+        {questions.map((item, index) => (
+          <Collapsible key={index} className="mt-3">
+            <CollapsibleTrigger className="flex justify-between p-3 bg-secondary rounded-lg text-left w-full hover:bg-secondary-light transition-colors">
+              <span className="text-sm md:text-base">{item.question}</span>
+              <ChevronDown className="h-5 w-5" />
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className="p-3 border rounded-lg bg-green-50 text-xs md:text-sm text-green-900">
+                {item.answer}
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        ))}
       </div>
     </div>
   );
