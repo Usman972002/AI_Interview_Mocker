@@ -79,61 +79,66 @@ const Header = () => {
   };
 
   return (
-    <div className="flex p-4 items-center justify-between bg-secondary shadow-sm">
-      <Image
-        src={"/logo.svg"}
-        width={120}
-        height={70}
-        alt="logo"
-        onClick={() => router.push("/")}
-        className="cursor-pointer"
-      />
-      
-      {/* Menu button for small screens */}
+    <div className="flex items-center justify-between p-4 bg-secondary shadow-sm relative">
+      {/* Left-side menu toggle button on small screens */}
       <div className="md:hidden cursor-pointer" onClick={handleToggle}>
         {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
       </div>
-      
-      {/* Desktop menu and mobile menu */}
+
+      {/* Centered Logo */}
+        <Image
+          src={"/logo.svg"}
+          width={120}
+          height={70}
+          alt="logo"
+          onClick={() => router.push("/")}
+          className="cursor-pointer"
+        />
+
+      {/* Centered Menu Items on large screens */}
       <ul
         className={`flex flex-col md:flex-row gap-6 absolute md:static top-16 left-0 w-full md:w-auto bg-secondary md:bg-transparent shadow-md md:shadow-none p-4 md:p-0 transition-all duration-300 ease-in-out
-          ${menuOpen ? "block" : "hidden md:flex"}`}
+          ${menuOpen ? "block" : "hidden md:flex"} md:justify-center`}
       >
         <li
           className={`hover:text-primary hover:font-bold transition-all cursor-pointer
-                ${path === "/dashboard" ? "text-primary font-bold" : ""}
-                `}
+                ${path === "/dashboard" ? "text-primary font-bold" : ""}`}
           onClick={() => handleNavClick("/dashboard")}
         >
           Dashboard
         </li>
         <li
           className={`hover:text-primary hover:font-bold transition-all cursor-pointer
-                ${path === "/questions" ? "text-primary font-bold" : ""}
-                `}
+                ${path === "/questions" ? "text-primary font-bold" : ""}`}
           onClick={() => handleNavClick("/questions")}
         >
           Questions
         </li>
         <li
           className={`hover:text-primary hover:font-bold transition-all cursor-pointer
-                ${path === "/upgrade" ? "text-primary font-bold" : ""}
-                `}
+                ${path === "/upgrade" ? "text-primary font-bold" : ""}`}
           onClick={() => handleNavClick("/upgrade")}
         >
           Upgrade
         </li>
         <li
           className={`hover:text-primary hover:font-bold transition-all cursor-pointer
-                ${path === "/howitworks" ? "text-primary font-bold" : ""}
-                `}
+                ${path === "/howitworks" ? "text-primary font-bold" : ""}`}
           onClick={() => handleNavClick("/howitworks")}
         >
           How it Works?
         </li>
       </ul>
-      
-      <UserButton />
+
+      {/* Right-side User Button */}
+      <div className="md:flex hidden">
+        <UserButton />
+      </div>
+
+      {/* UserButton for small screens, placed next to the logo */}
+      <div className="md:hidden ml-4">
+        <UserButton />
+      </div>
     </div>
   );
 };
